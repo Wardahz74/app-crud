@@ -15,6 +15,7 @@ Route::post('/product', [ProductController::class, 'store'])->name('product.stor
 Route::resource('products', ProductController::class);
 Route::resource('sellers', SellerController::class);
 Route::get('sellers/create', [SellerController::class, 'create'])->name('sellers.create');
+Route::get('sellers', [SellerController::class, 'index']);
 
 
 // Register & Login

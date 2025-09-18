@@ -85,4 +85,36 @@ public function store(Request $request)
         $seller->delete();
         return redirect()->route('sellers.index')->with('success', 'Seller deleted successfully!');
     }
+    public function storeApi(Request $request)
+{
+    $request->validate([
+        'name'  => 'required',
+        'email' => 'required|email|unique:sellers,email',
+        'phone' => 'required',
+        'registration_number' => 'required',
+        'ntn' => 'required',
+        'province' => 'required',
+        'environment' => 'required',
+    ]);
+
+    $seller = Seller::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'registration_number' => $request->registration_number,
+        'ntn' => $request->ntn,
+        'province' => $request->province,
+        'sandbox_token' => $request->sandbox_token,
+        'production_token' => $request->production_token,
+        'environment' => $request->environment,
+        'address' => $request->address,
+        'scenarios' => $request->scenarios ? json_encode($request->scenarios) : null,
+    ]);
+
+    return response()->json([
+        'message' => 'Seller added successfully!',
+        'seller' => $seller
+    ], 201);
+}
+
 }
